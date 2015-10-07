@@ -646,7 +646,7 @@ func TestApplyTemplateField(t *testing.T) {
 		t.Fatalf("unexpected error creating parser, got %v", err)
 	}
 
-	measurement, tags, field, err := p.ApplyTemplate("current.users.logged_in")
+	measurement, _, field, err := p.ApplyTemplate("current.users.logged_in")
 
 	if measurement != "current_users" {
 		t.Errorf("Parser.ApplyTemplate unexpected result. got %s, exp %s",
@@ -669,9 +669,9 @@ func TestApplyTemplateFieldError(t *testing.T) {
 		t.Fatalf("unexpected error creating parser, got %v", err)
 	}
 
-	measurement, tags, field, err := p.ApplyTemplate("current.users.logged_in")
-  if err == nil {
-    t.Errorf("Parser.ApplyTemplate unexpected result. got %s, exp %s", err,
-      "'field' can only be used once in each template: current.users.logged_in")
-  }
+	_, _, _, err = p.ApplyTemplate("current.users.logged_in")
+	if err == nil {
+	  t.Errorf("Parser.ApplyTemplate unexpected result. got %s, exp %s", err,
+	    "'field' can only be used once in each template: current.users.logged_in")
+	}
 }
